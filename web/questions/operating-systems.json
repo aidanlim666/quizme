@@ -1,0 +1,123 @@
+[
+  {
+    "id": "os-001",
+    "topic": "operating-systems",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "Which of these is **not** one of the four necessary conditions for deadlock (Coffman conditions)?",
+    "choices": ["Preemption", "Mutual exclusion", "Hold and wait", "Circular wait"],
+    "answer": 0,
+    "explanation": "The four conditions are mutual exclusion, hold and wait, **no** preemption, and circular wait. Allowing preemption actually breaks one of them."
+  },
+  {
+    "id": "os-002",
+    "topic": "operating-systems",
+    "difficulty": 2,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "Processes P1, P2 and P3 all arrive at time 0 in that order, with CPU bursts of 24, 3 and 3 ms. Under **FCFS**, what is the average waiting time in ms?",
+    "answer": ["17"],
+    "explanation": "The waits are P1 = 0, P2 = 24, P3 = 27. The average is $51 / 3 = 17$ ms. This is the convoy effect: short jobs stuck behind a long one."
+  },
+  {
+    "id": "os-003",
+    "topic": "operating-systems",
+    "difficulty": 2,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "The same processes arrive at time 0 with bursts P1 = 24, P2 = 3, P3 = 3 ms. Under **non-preemptive SJF**, what is the average waiting time in ms?",
+    "answer": ["3"],
+    "explanation": "The order is P2, P3, P1, with waits 0, 3 and 6. The average is $9 / 3 = 3$ ms. SJF minimizes average waiting time."
+  },
+  {
+    "id": "os-004",
+    "topic": "operating-systems",
+    "difficulty": 1,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "With 4 KiB pages, how many bits of a virtual address are the **page offset**?",
+    "answer": ["12"],
+    "explanation": "$4\\text{ KiB} = 4096 = 2^{12}$ bytes, so 12 bits address a byte within the page."
+  },
+  {
+    "id": "os-005",
+    "topic": "operating-systems",
+    "difficulty": 3,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "A system has a 32-bit virtual address space, 4 KiB pages, and a **single-level** page table with 4-byte entries. How large is one process's page table, in **MiB**?",
+    "answer": ["4"],
+    "explanation": "There are $2^{32} / 2^{12} = 2^{20}$ pages, and $2^{20} \\times 4$ B = 4 MiB. That's why real systems use multi-level page tables."
+  },
+  {
+    "id": "os-006",
+    "topic": "operating-systems",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "What does `fork()` return **in the child process**?",
+    "choices": ["0", "The child's PID", "The parent's PID", "-1"],
+    "answer": 0,
+    "explanation": "`fork()` returns 0 in the child and the child's PID in the parent. It returns −1 in the parent if the fork fails."
+  },
+  {
+    "id": "os-007",
+    "topic": "operating-systems",
+    "difficulty": 2,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "How many times is `hi` printed?\n\n```c\nint main(void) {\n    fork();\n    fork();\n    printf(\"hi\\n\");\n    return 0;\n}\n```",
+    "answer": ["4"],
+    "explanation": "Each `fork()` doubles the number of processes: 1 → 2 → 4. All four reach the `printf`."
+  },
+  {
+    "id": "os-008",
+    "topic": "operating-systems",
+    "difficulty": 3,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "Using **FIFO** page replacement with **3 frames** (initially empty), how many page faults does this reference string cause?\n\n`1 2 3 4 1 2 5 1 2 3 4 5`",
+    "answer": ["9"],
+    "explanation": "Faults on 1, 2, 3, 4, 1, 2, 5, 3, 4, which is 9. The references 1, 2 (after 5) and the final 5 are hits. With 4 frames this string causes 10 faults, the classic example of Belady's anomaly."
+  },
+  {
+    "id": "os-009",
+    "topic": "operating-systems",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "Which scheduling algorithm can cause **starvation** of long jobs?",
+    "choices": ["Shortest Job First", "Round Robin", "First-Come, First-Served", "Multilevel feedback queue with aging"],
+    "answer": 0,
+    "explanation": "If short jobs keep arriving, SJF may never pick a long one. Round Robin and FCFS guarantee every job eventually runs, and aging exists to prevent starvation."
+  },
+  {
+    "id": "os-010",
+    "topic": "operating-systems",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "What is **thrashing**?",
+    "choices": ["The system spends more time paging than executing processes", "Two processes waiting on each other's locks forever", "A CPU throttling because it is overheating", "Frequent cache misses caused by a bad hash function"],
+    "answer": 0,
+    "explanation": "When the combined working sets don't fit in RAM, processes keep evicting each other's pages and the CPU sits idle waiting on disk I/O."
+  },
+  {
+    "id": "os-011",
+    "topic": "operating-systems",
+    "difficulty": 2,
+    "type": "text",
+    "match": "regex",
+    "prompt": "Which family of Unix system calls replaces the current process image with a new program (often called right after `fork()`)?",
+    "answer": ["^exec(l|lp|le|v|vp|ve|vpe)?(\\(\\))?$"],
+    "display": "exec (e.g. execve)",
+    "explanation": "`exec*` loads a new program into the current process and keeps the PID. `fork()` followed by `exec()` is how shells start commands."
+  },
+  {
+    "id": "os-012",
+    "topic": "operating-systems",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "Which of these is **shared** between threads of the same process?",
+    "choices": ["Heap memory", "Stack", "Program counter", "Register values"],
+    "answer": 0,
+    "explanation": "Threads share the address space (code, globals, heap, open files). Each thread has its own stack, program counter and registers."
+  }
+]

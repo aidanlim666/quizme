@@ -1,0 +1,122 @@
+[
+  {
+    "id": "net-001",
+    "topic": "networking",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "At which OSI layer does **IP** operate?",
+    "choices": ["Network (layer 3)", "Transport (layer 4)", "Data link (layer 2)", "Application (layer 7)"],
+    "answer": 0,
+    "explanation": "IP handles logical addressing and routing between networks, which is layer 3. TCP and UDP are layer 4. Ethernet is layer 2."
+  },
+  {
+    "id": "net-002",
+    "topic": "networking",
+    "difficulty": 1,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "How many **usable host** addresses are in an IPv4 `/24` subnet?",
+    "answer": ["254"],
+    "explanation": "8 host bits give $2^8 = 256$ addresses. Subtract the network and broadcast addresses to get 254."
+  },
+  {
+    "id": "net-003",
+    "topic": "networking",
+    "difficulty": 2,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "How many **usable host** addresses are in an IPv4 `/26` subnet?",
+    "answer": ["62"],
+    "explanation": "$32 - 26 = 6$ host bits, so $2^6 - 2 = 62$."
+  },
+  {
+    "id": "net-004",
+    "topic": "networking",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "In what order are the segments of the TCP three-way handshake sent?",
+    "choices": ["SYN → SYN-ACK → ACK", "SYN → ACK → SYN-ACK", "ACK → SYN → SYN-ACK", "SYN → SYN → ACK"],
+    "answer": 0,
+    "explanation": "The client sends SYN, the server replies SYN-ACK, and the client confirms with ACK. Both sides have now synchronized sequence numbers."
+  },
+  {
+    "id": "net-005",
+    "topic": "networking",
+    "difficulty": 1,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "What is the default TCP port for **HTTPS**?",
+    "answer": ["443"],
+    "explanation": "HTTPS uses 443 and plain HTTP uses 80."
+  },
+  {
+    "id": "net-006",
+    "topic": "networking",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "Which protocol finds the **MAC address** for an IPv4 address on a local network?",
+    "choices": ["ARP", "DNS", "DHCP", "ICMP"],
+    "answer": 0,
+    "explanation": "ARP broadcasts “who has 192.168.1.5?” and the owner replies with its MAC address. DNS maps names to IP addresses, and DHCP hands out IP addresses."
+  },
+  {
+    "id": "net-007",
+    "topic": "networking",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "Which statement is true of **UDP**?",
+    "choices": ["It guarantees neither delivery nor ordering", "It uses a three-way handshake", "It provides congestion control", "It retransmits lost segments"],
+    "answer": 0,
+    "explanation": "UDP is connectionless and best-effort, with just ports and a checksum on top of IP. The other three are TCP features."
+  },
+  {
+    "id": "net-008",
+    "topic": "networking",
+    "difficulty": 2,
+    "type": "text",
+    "match": "numeric",
+    "tolerance": 0.001,
+    "prompt": "What is the **transmission delay**, in milliseconds, for a 1,000-byte packet on a 1 Mbps link?",
+    "answer": ["8"],
+    "explanation": "$1000 \\text{ B} \\times 8 = 8000$ bits, and $8000 / 10^6 \\text{ bps} = 0.008$ s = 8 ms."
+  },
+  {
+    "id": "net-009",
+    "topic": "networking",
+    "difficulty": 2,
+    "type": "text",
+    "prompt": "Write the subnet mask for a `/20` prefix in dotted-decimal notation.",
+    "answer": ["255.255.240.0"],
+    "explanation": "20 one-bits are 8 + 8 + 4. The third octet is `11110000` = 240, giving 255.255.240.0."
+  },
+  {
+    "id": "net-010",
+    "topic": "networking",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "Ordinary DNS queries are usually sent over:",
+    "choices": ["UDP port 53", "TCP port 80", "UDP port 67", "TCP port 25"],
+    "answer": 0,
+    "explanation": "DNS uses port 53, normally over UDP. It falls back to TCP for large responses and zone transfers. Port 67 is DHCP and port 25 is SMTP."
+  },
+  {
+    "id": "net-011",
+    "topic": "networking",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "What does the **TTL** field in an IPv4 header do?",
+    "choices": ["Limits how many hops the packet can make before being discarded", "Sets how long a DNS record can be cached", "Measures round-trip time", "Orders fragments for reassembly"],
+    "answer": 0,
+    "explanation": "Each router decrements the TTL and drops the packet when it reaches 0, which keeps routing loops from circulating packets forever. `traceroute` relies on this."
+  },
+  {
+    "id": "net-012",
+    "topic": "networking",
+    "difficulty": 1,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "How many bits long is an **IPv6** address?",
+    "answer": ["128"],
+    "explanation": "IPv6 addresses are 128 bits, written as eight 16-bit groups in hex. IPv4 addresses are 32 bits."
+  }
+]

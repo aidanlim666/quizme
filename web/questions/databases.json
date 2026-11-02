@@ -1,0 +1,121 @@
+[
+  {
+    "id": "db-001",
+    "topic": "databases",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "In **ACID**, what does the “I” stand for?",
+    "choices": ["Isolation", "Integrity", "Indexing", "Idempotence"],
+    "answer": 0,
+    "explanation": "ACID stands for Atomicity, Consistency, Isolation, Durability. Isolation means concurrent transactions behave as if they ran one at a time, up to the chosen isolation level."
+  },
+  {
+    "id": "db-002",
+    "topic": "databases",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "Which SQL clause filters **groups** after aggregation?",
+    "choices": ["`HAVING`", "`WHERE`", "`GROUP BY`", "`ORDER BY`"],
+    "answer": 0,
+    "explanation": "`WHERE` filters rows before grouping. `HAVING` filters after `GROUP BY` and can refer to aggregates, e.g. `HAVING COUNT(*) > 5`."
+  },
+  {
+    "id": "db-003",
+    "topic": "databases",
+    "difficulty": 1,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "Table `A` has 4 rows and table `B` has 5 rows. How many rows does `SELECT * FROM A CROSS JOIN B` return?",
+    "answer": ["20"],
+    "explanation": "A cross join is the Cartesian product: $4 \\times 5 = 20$."
+  },
+  {
+    "id": "db-004",
+    "topic": "databases",
+    "difficulty": 2,
+    "type": "mcq",
+    "prompt": "Which normal form removes **partial dependencies** of non-key attributes on part of a composite key?",
+    "choices": ["2NF", "1NF", "3NF", "BCNF"],
+    "answer": 0,
+    "explanation": "2NF = 1NF plus no non-prime attribute depending on only part of a candidate key. 3NF then removes transitive dependencies."
+  },
+  {
+    "id": "db-005",
+    "topic": "databases",
+    "difficulty": 2,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "Table `t` has a column `x` with the values `1, NULL, 3, NULL`. What does this return?\n\n```sql\nSELECT COUNT(x) FROM t;\n```",
+    "answer": ["2"],
+    "explanation": "`COUNT(column)` skips NULLs, so the answer is 2. `COUNT(*)` counts every row and would return 4."
+  },
+  {
+    "id": "db-006",
+    "topic": "databases",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "Adding a B-tree index on `users.email` most directly speeds up:",
+    "choices": ["Queries like `WHERE email = ?`", "`INSERT`s into `users`", "Reducing the table's storage size", "`SELECT *` with no `WHERE` clause"],
+    "answer": 0,
+    "explanation": "The index lets the database find matching rows in $O(\\log n)$ instead of scanning the table. It actually makes inserts slower and uses extra storage."
+  },
+  {
+    "id": "db-007",
+    "topic": "databases",
+    "difficulty": 1,
+    "type": "text",
+    "prompt": "Which SQL keyword, placed right after `SELECT`, removes duplicate rows from the result?",
+    "answer": ["DISTINCT", "SELECT DISTINCT"],
+    "explanation": "`SELECT DISTINCT city FROM users` returns each city once."
+  },
+  {
+    "id": "db-008",
+    "topic": "databases",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "What does `A LEFT JOIN B ON ...` return?",
+    "choices": ["Every row of A, with matching B columns or NULLs where there's no match", "Only rows with a match in both A and B", "Every row of both A and B", "Every row of B, with matching A columns or NULLs"],
+    "answer": 0,
+    "explanation": "A left outer join keeps every left-side row. The second option describes an INNER JOIN, the third a FULL OUTER JOIN, and the fourth a RIGHT JOIN."
+  },
+  {
+    "id": "db-009",
+    "topic": "databases",
+    "difficulty": 3,
+    "type": "mcq",
+    "prompt": "Which SQL isolation level prevents **dirty reads** but still allows **non-repeatable reads**?",
+    "choices": ["Read Committed", "Read Uncommitted", "Repeatable Read", "Serializable"],
+    "answer": 0,
+    "explanation": "Read Committed only shows committed data, so there are no dirty reads. A row read twice can still change in between if another transaction commits. Repeatable Read prevents that."
+  },
+  {
+    "id": "db-010",
+    "topic": "databases",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "What does a **foreign key** constraint enforce?",
+    "choices": ["Each value matches an existing key in the referenced table (referential integrity)", "Each value in the column is unique", "The column can never be NULL", "The column is automatically indexed and sorted"],
+    "answer": 0,
+    "explanation": "A foreign key stops you from inserting an order for a customer that doesn't exist (or deleting a referenced customer, depending on `ON DELETE`). Uniqueness comes from `UNIQUE` or `PRIMARY KEY` constraints."
+  },
+  {
+    "id": "db-011",
+    "topic": "databases",
+    "difficulty": 2,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "Relation $R(A, B)$ has 3 tuples and $S(B, C)$ has 2 tuples. What is the **maximum** number of tuples in the natural join $R \\bowtie S$?",
+    "answer": ["6"],
+    "explanation": "If every tuple in both relations has the same $B$ value, every pair matches: $3 \\times 2 = 6$. The minimum is 0."
+  },
+  {
+    "id": "db-012",
+    "topic": "databases",
+    "difficulty": 2,
+    "type": "mcq",
+    "prompt": "In a **B+ tree** index, where are the records (or pointers to them) stored?",
+    "choices": ["Only in the leaf nodes", "In every node", "Only in the root", "Only in the internal nodes"],
+    "answer": 0,
+    "explanation": "Internal nodes hold only keys for routing. All data lives in the leaves, which are linked together so range scans are fast."
+  }
+]

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>QuizMe Setup</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%235b4bdb'/%3E%3Ctext x='32' y='44' font-size='36' text-anchor='middle' fill='white' font-family='system-ui,sans-serif' font-weight='700'%3EQ%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="wrap setup">
+    <h1>Set up QuizMe</h1>
+    <p class="lede">Takes about 3 minutes on your iPhone. After that, opening Instagram shows you a CS question first, and you get in once you answer it correctly.</p>
+
+    <section class="card">
+      <h2><span class="step-num">1</span> Add the “QuizMe Gate” shortcut</h2>
+      <p>When Instagram opens, this shortcut checks whether you just answered a question. If you didn’t, it sends you to the quiz.</p>
+      <p data-link="gate" hidden><a class="btn" href="#" target="_blank" rel="noopener">Get “QuizMe Gate”</a></p>
+      <details data-manual="gate">
+        <summary>Build it yourself</summary>
+        <p class="note">In the Shortcuts app tap <span class="ui">+</span>, name it <span class="ui">QuizMe Gate</span>, and add these actions in order:</p>
+        <ol class="steps">
+          <li><span class="ui">Get File</span>: from <span class="ui">Shortcuts</span> folder, path <code>quizme_unlock.txt</code>. Turn <span class="ui">Error If Not Found</span> off.</li>
+          <li><span class="ui">If</span> <em>File</em> <span class="ui">has any value</span></li>
+          <li>Inside the If: <span class="ui">Get Details of Files</span>: <em>Last Modified Date</em> of <em>File</em></li>
+          <li>Inside the If: <span class="ui">Get Time Between Dates</span>: between <em>Last Modified Date</em> and <em>Current Date</em> in <span class="ui">Seconds</span></li>
+          <li>Inside the If: another <span class="ui">If</span> <em>Time Between Dates</em> <span class="ui">is less than</span> <code>30</code> containing <span class="ui">Stop This Shortcut</span></li>
+          <li>After both End Ifs: <span class="ui">Format Date</span>: <em>Current Date</em>, Date Format <span class="ui">Custom</span>, format string <code>yyyyMMddHHmmss</code></li>
+          <li><span class="ui">URL</span>: the address below, followed by the <em>Formatted Date</em> variable:
+            <code class="url-box" id="gate-url">https://…/?s=</code></li>
+          <li><span class="ui">Open URLs</span>: <em>URL</em></li>
+        </ol>
+      </details>
+    </section>
+
+    <section class="card">
+      <h2><span class="step-num">2</span> Add the “QuizMe Unlock” shortcut</h2>
+      <p>When you answer correctly and tap <span class="ui">Continue to Instagram</span>, this shortcut records the unlock and opens Instagram.</p>
+      <p data-link="unlock" hidden><a class="btn" href="#" target="_blank" rel="noopener">Get “QuizMe Unlock”</a></p>
+      <details data-manual="unlock">
+        <summary>Build it yourself</summary>
+        <p class="note">Name it exactly <span class="ui">QuizMe Unlock</span>. Capitalization matters. Add these actions:</p>
+        <ol class="steps">
+          <li><span class="ui">Text</span>: <code>unlocked</code></li>
+          <li><span class="ui">Save File</span>: save <em>Text</em> to the <span class="ui">Shortcuts</span> folder. Turn <span class="ui">Ask Where to Save</span> off, set Subpath to <code>quizme_unlock.txt</code>, and turn <span class="ui">Overwrite If File Exists</span> on.</li>
+          <li><span class="ui">Open App</span>: <em>Instagram</em></li>
+        </ol>
+      </details>
+    </section>
+
+    <section class="card">
+      <h2><span class="step-num">3</span> Create the automation</h2>
+      <p class="note">Apple doesn’t let anyone share automations, so this step has to be done by hand.</p>
+      <ol class="steps">
+        <li>Open <span class="ui">Shortcuts</span> and go to the <span class="ui">Automation</span> tab. Tap <span class="ui">+</span> (or <span class="ui">New Automation</span>).</li>
+        <li>Choose <span class="ui">App</span>, then tap <span class="ui">Choose</span> and select <span class="ui">Instagram</span>.</li>
+        <li>Keep <span class="ui">Is Opened</span> checked and <span class="ui">Is Closed</span> unchecked.</li>
+        <li>Select <span class="ui">Run Immediately</span> and turn <span class="ui">Notify When Run</span> off. Tap <span class="ui">Next</span>.</li>
+        <li>Pick <span class="ui">QuizMe Gate</span>. If it isn’t listed, choose <span class="ui">New Blank Automation</span>, add <span class="ui">Run Shortcut</span>, and select <span class="ui">QuizMe Gate</span>.</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2><span class="step-num">4</span> Test it</h2>
+      <ol class="steps">
+        <li>Open Instagram. You should land on a QuizMe question in Safari.</li>
+        <li>Answer it. Tap <span class="ui">Continue to Instagram</span>, then <span class="ui">Open</span> when Safari asks.</li>
+        <li>Instagram opens. Close it and open it again, and you get a new question.</li>
+      </ol>
+      <p class="note">The first time, Shortcuts may ask permission to read the file or open the website. Choose <span class="ui">Always Allow</span>.</p>
+      <p><a class="btn" href="index.html">Try a question now</a></p>
+    </section>
+
+    <section class="card">
+      <h2>Troubleshooting</h2>
+      <ul class="steps">
+        <li><strong>Instagram opens and the quiz comes right back (loop):</strong> the unlock isn’t being seen. Check that “QuizMe Unlock” saves to the same file name (<code>quizme_unlock.txt</code>) in the Shortcuts folder that “QuizMe Gate” reads.</li>
+        <li><strong>The quiz never appears:</strong> make sure the automation is on and set to Run Immediately. In “QuizMe Gate”, add <span class="ui">Show Result</span> after <span class="ui">Get Time Between Dates</span> and run it by hand. You should see a positive number. If it’s negative, swap the two dates.</li>
+        <li><strong>“Continue to Instagram” does nothing:</strong> the unlock shortcut must be named exactly <em>QuizMe Unlock</em>.</li>
+        <li><strong>Too many Safari tabs:</strong> go to Settings → Apps → Safari → Close Tabs and choose <em>After One Day</em>.</li>
+        <li><strong>Need a break from QuizMe?</strong> In Shortcuts → Automation, turn the Instagram automation off.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script type="module">
+    import { CONFIG } from './src/config.js';
+
+    document.getElementById('gate-url').textContent = new URL('./?s=', location.href).href;
+
+    for (const [key, href] of Object.entries(CONFIG.shortcutLinks)) {
+      if (!href) continue;
+      const p = document.querySelector(`[data-link="${key}"]`);
+      p.querySelector('a').href = href;
+      p.hidden = false;
+    }
+    for (const d of document.querySelectorAll('[data-manual]')) {
+      if (!CONFIG.shortcutLinks[d.dataset.manual]) d.open = true;
+    }
+  </script>
+</body>
+</html>

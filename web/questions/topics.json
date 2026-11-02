@@ -1,0 +1,12 @@
+{
+  "topics": [
+    { "id": "linear-algebra", "name": "Linear Algebra", "file": "linear-algebra.json" },
+    { "id": "internet-programming", "name": "Internet Programming", "file": "internet-programming.json" },
+    { "id": "machine-architecture", "name": "Machine Architecture", "file": "machine-architecture.json" },
+    { "id": "operating-systems", "name": "Operating Systems", "file": "operating-systems.json" },
+    { "id": "data-structures-algorithms", "name": "Data Structures & Algorithms", "file": "data-structures-algorithms.json" },
+    { "id": "discrete-math", "name": "Discrete Math", "file": "discrete-math.json" },
+    { "id": "networking", "name": "Networking", "file": "networking.json" },
+    { "id": "databases", "name": "Databases", "file": "databases.json" }
+  ]
+}

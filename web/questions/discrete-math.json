@@ -1,0 +1,122 @@
+[
+  {
+    "id": "dm-001",
+    "topic": "discrete-math",
+    "difficulty": 1,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "How many subsets does a set with **5 elements** have?",
+    "answer": ["32"],
+    "explanation": "Each element is either in or out of a subset, so there are $2^5 = 32$ subsets, counting the empty set and the set itself."
+  },
+  {
+    "id": "dm-002",
+    "topic": "discrete-math",
+    "difficulty": 1,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "How many ways can you choose a committee of 2 people from 6? Compute $\\binom{6}{2}$.",
+    "answer": ["15"],
+    "explanation": "$\\binom{6}{2} = \\dfrac{6 \\cdot 5}{2} = 15$."
+  },
+  {
+    "id": "dm-003",
+    "topic": "discrete-math",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "What is the **contrapositive** of “If $P$, then $Q$”?",
+    "choices": ["If not $Q$, then not $P$", "If $Q$, then $P$", "If not $P$, then not $Q$", "$P$ and not $Q$"],
+    "answer": 0,
+    "explanation": "The contrapositive $\\neg Q \\to \\neg P$ is logically equivalent to $P \\to Q$. “If $Q$ then $P$” is the converse, “if not $P$ then not $Q$” is the inverse, and “$P$ and not $Q$” is the negation."
+  },
+  {
+    "id": "dm-004",
+    "topic": "discrete-math",
+    "difficulty": 1,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "Compute $3^4 \\bmod 7$.",
+    "answer": ["4"],
+    "explanation": "$3^4 = 81 = 11 \\cdot 7 + 4$, so the result is 4."
+  },
+  {
+    "id": "dm-005",
+    "topic": "discrete-math",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "Which expression is equivalent to $\\neg(P \\land Q)$?",
+    "choices": ["$\\neg P \\lor \\neg Q$", "$\\neg P \\land \\neg Q$", "$P \\lor Q$", "$\\neg P \\to \\neg Q$"],
+    "answer": 0,
+    "explanation": "By De Morgan's law, negating an AND gives the OR of the negations."
+  },
+  {
+    "id": "dm-006",
+    "topic": "discrete-math",
+    "difficulty": 1,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "How many edges does the complete graph $K_6$ have?",
+    "answer": ["15"],
+    "explanation": "Every pair of the 6 vertices is joined by an edge: $\\binom{6}{2} = 15$."
+  },
+  {
+    "id": "dm-007",
+    "topic": "discrete-math",
+    "difficulty": 1,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "Compute $\\gcd(84, 36)$.",
+    "answer": ["12"],
+    "explanation": "Euclid's algorithm: $84 = 2 \\cdot 36 + 12$, then $36 = 3 \\cdot 12 + 0$, so the gcd is 12."
+  },
+  {
+    "id": "dm-008",
+    "topic": "discrete-math",
+    "difficulty": 1,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "What is the minimum number of people needed to **guarantee** that at least two were born in the same month?",
+    "answer": ["13"],
+    "explanation": "Pigeonhole principle: with 12 months (holes), 13 people (pigeons) force a repeat. 12 people could all have different months."
+  },
+  {
+    "id": "dm-009",
+    "topic": "discrete-math",
+    "difficulty": 2,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "How many bit strings of length 8 contain **exactly three 1s**?",
+    "answer": ["56"],
+    "explanation": "Choose the 3 positions for the 1s: $\\binom{8}{3} = \\dfrac{8 \\cdot 7 \\cdot 6}{6} = 56$."
+  },
+  {
+    "id": "dm-010",
+    "topic": "discrete-math",
+    "difficulty": 2,
+    "type": "mcq",
+    "prompt": "A relation that is **reflexive**, **antisymmetric**, and **transitive** is called:",
+    "choices": ["A partial order", "An equivalence relation", "A function", "A bijection"],
+    "answer": 0,
+    "explanation": "Reflexive + antisymmetric + transitive is a partial order (e.g. ≤ or ⊆). An equivalence relation needs *symmetric* instead of antisymmetric."
+  },
+  {
+    "id": "dm-011",
+    "topic": "discrete-math",
+    "difficulty": 2,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "How many distinct arrangements are there of the letters in **BANANA**?",
+    "answer": ["60"],
+    "explanation": "6 letters, with A repeated 3 times and N twice: $\\dfrac{6!}{3!\\,2!} = \\dfrac{720}{12} = 60$."
+  },
+  {
+    "id": "dm-012",
+    "topic": "discrete-math",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "Which of these is a **tautology** (true under every truth assignment)?",
+    "choices": ["$P \\lor \\neg P$", "$P \\land \\neg P$", "$P \\to \\neg P$", "$P \\lor Q$"],
+    "answer": 0,
+    "explanation": "$P \\lor \\neg P$ (the law of the excluded middle) is always true. $P \\land \\neg P$ is a contradiction, and the other two depend on the values of $P$ and $Q$."
+  }
+]

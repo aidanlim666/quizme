@@ -1,0 +1,280 @@
+:root {
+  --bg: #f6f5f2;
+  --surface: #ffffff;
+  --text: #1b1b1f;
+  --muted: #62626d;
+  --border: #e3e1dc;
+  --accent: #5b4bdb;
+  --accent-text: #ffffff;
+  --accent-soft: #ecebfd;
+  --good: #1f8a4c;
+  --good-soft: #e3f4ea;
+  --bad: #c2362f;
+  --bad-soft: #fbe7e5;
+  --code-bg: #f1f0ec;
+  --radius: 14px;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 4px 16px rgb(0 0 0 / 0.05);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121214;
+    --surface: #1c1c20;
+    --text: #ececf0;
+    --muted: #a0a0ab;
+    --border: #2e2e35;
+    --accent: #8f83ff;
+    --accent-text: #121214;
+    --accent-soft: #26233f;
+    --good: #4cc27d;
+    --good-soft: #17301f;
+    --bad: #ff6b61;
+    --bad-soft: #3a1c1a;
+    --code-bg: #26262c;
+    --shadow: none;
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 17px/1.5 -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, sans-serif;
+  padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+a { color: var(--accent); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.loading { color: var(--muted); text-align: center; margin-top: 30vh; }
+
+/* ---------- header ---------- */
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0 14px;
+}
+.brand { font-weight: 750; letter-spacing: -0.01em; font-size: 1.15rem; margin: 0; }
+.chip {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.difficulty { margin-left: auto; color: var(--muted); font-size: 0.75rem; letter-spacing: 2px; }
+
+/* ---------- card ---------- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+.prompt { font-size: 1.08rem; font-weight: 500; }
+
+.rich p { margin: 0 0 0.75em; }
+.rich p:last-child { margin-bottom: 0; }
+.rich code, .choice-text code, .reveal-answer code {
+  font: 0.88em/1.4 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  background: var(--code-bg);
+  padding: 1px 5px;
+  border-radius: 5px;
+}
+.rich pre {
+  margin: 0 0 0.75em;
+  background: var(--code-bg);
+  border-radius: 10px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.rich pre code { background: none; padding: 0; font-size: 0.86rem; }
+.rich pre code.hljs { background: none; padding: 0; }
+.katex-display { overflow-x: auto; overflow-y: hidden; padding: 4px 0; }
+
+/* ---------- multiple choice ---------- */
+
+.choices { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; }
+
+.choice {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  min-height: 52px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.choice:hover:not(:disabled) { border-color: var(--accent); }
+.choice:active:not(:disabled) { background: var(--accent-soft); }
+.choice:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.choice .letter {
+  flex: none;
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  border-radius: 8px;
+  background: var(--code-bg);
+  font-weight: 700; font-size: 0.85rem;
+  color: var(--muted);
+}
+.choice-text { min-width: 0; overflow-wrap: anywhere; }
+.choice:disabled { cursor: default; opacity: 0.55; }
+.choice.wrong { border-color: var(--bad); background: var(--bad-soft); opacity: 1; }
+.choice.wrong .choice-text { text-decoration: line-through; text-decoration-color: var(--bad); }
+.choice.wrong .letter { background: var(--bad); color: #fff; }
+.choice.correct { border-color: var(--good); background: var(--good-soft); opacity: 1; }
+.choice.correct .letter { background: var(--good); color: #fff; }
+
+/* ---------- text answer ---------- */
+
+.answer-form { display: flex; gap: 10px; margin-top: 18px; }
+.answer-form input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  font-size: 1.05rem; /* >= 16px so iOS doesn't zoom on focus */
+  color: inherit;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.answer-form input:focus { outline: none; border-color: var(--accent); }
+.answer-form input:disabled { opacity: 0.6; }
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  font-weight: 650;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 18px;
+  min-height: 48px;
+  background: var(--accent);
+  color: var(--accent-text);
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn:disabled { opacity: 0.5; cursor: default; }
+.btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.btn.big { width: 100%; min-height: 56px; font-size: 1.1rem; margin-top: 14px; }
+
+/* ---------- feedback ---------- */
+
+.feedback { margin: 14px 0 0; color: var(--muted); font-size: 0.92rem; }
+.feedback:empty { display: none; }
+
+.reveal {
+  margin-top: 16px;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+.reveal h2 {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 0 0 4px;
+}
+.reveal-answer { font-weight: 700; font-size: 1.1rem; margin: 0 0 10px; color: var(--good); }
+.explanation { color: var(--muted); font-size: 0.95rem; }
+
+.success {
+  margin-top: 16px;
+  background: var(--good-soft);
+  border: 1px solid var(--good);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+.success-title { margin: 0 0 6px; font-size: 1.25rem; font-weight: 750; color: var(--good); }
+.success .explanation { color: var(--text); }
+.hint { color: var(--muted); font-size: 0.85rem; margin: 12px 0 0; }
+
+/* ---------- footer ---------- */
+
+.footer { color: var(--muted); font-size: 0.88rem; padding-bottom: 32px; }
+.footer p { margin: 6px 0; }
+.stats strong { color: var(--text); }
+.topics { margin: 10px 0; }
+.topics summary { cursor: pointer; color: var(--text); font-weight: 600; padding: 6px 0; }
+.topic-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 6px 14px; margin-top: 8px; }
+.topic-list label { display: flex; align-items: center; gap: 8px; color: var(--text); padding: 4px 0; }
+.topic-list input { width: 18px; height: 18px; accent-color: var(--accent); }
+
+/* ---------- motion ---------- */
+
+.shake { animation: shake 0.35s ease-in-out; }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-7px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shake { animation: none; }
+  * { scroll-behavior: auto !important; transition: none !important; }
+}
+
+/* ---------- setup page ---------- */
+
+.setup h1 { font-size: 1.7rem; letter-spacing: -0.02em; margin: 12px 0 4px; }
+.setup .lede { color: var(--muted); margin: 0 0 20px; }
+.setup .card { margin-bottom: 14px; }
+.setup h2 { font-size: 1.1rem; margin: 0 0 8px; display: flex; gap: 10px; align-items: center; }
+.step-num {
+  flex: none;
+  width: 26px; height: 26px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--accent); color: var(--accent-text);
+  font-size: 0.85rem; font-weight: 750;
+}
+.setup .steps { padding-left: 1.2em; margin: 8px 0 0; }
+.setup .steps li { margin-bottom: 6px; }
+.setup .url-box {
+  display: block;
+  font: 0.85rem/1.4 ui-monospace, "SF Mono", Menlo, monospace;
+  background: var(--code-bg);
+  padding: 10px 12px;
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+  margin: 8px 0;
+}
+.setup .note { font-size: 0.88rem; color: var(--muted); }
+.setup .ui { font-weight: 650; }

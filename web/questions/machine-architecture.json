@@ -1,0 +1,126 @@
+[
+  {
+    "id": "ma-001",
+    "topic": "machine-architecture",
+    "difficulty": 1,
+    "type": "text",
+    "match": "regex",
+    "prompt": "Write $-5$ as an **8-bit two's complement** binary number.",
+    "answer": ["^(0b)?1111 ?1011$"],
+    "display": "11111011",
+    "explanation": "$+5$ = `00000101`. Invert the bits to get `11111010`, then add 1 to get `11111011`."
+  },
+  {
+    "id": "ma-002",
+    "topic": "machine-architecture",
+    "difficulty": 1,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "Convert `0x2F` to decimal.",
+    "answer": ["47"],
+    "explanation": "$2 \\cdot 16 + 15 = 47$."
+  },
+  {
+    "id": "ma-003",
+    "topic": "machine-architecture",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "What range of integers can an **8-bit two's complement** number represent?",
+    "choices": ["$-128$ to $127$", "$-127$ to $127$", "$-127$ to $128$", "$0$ to $255$"],
+    "answer": 0,
+    "explanation": "$n$ bits give $-2^{n-1}$ to $2^{n-1} - 1$. Two's complement has only one zero, so the negative side has one extra value."
+  },
+  {
+    "id": "ma-004",
+    "topic": "machine-architecture",
+    "difficulty": 2,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "A 32 KiB direct-mapped cache uses 64-byte blocks. How many cache lines does it have?",
+    "answer": ["512"],
+    "explanation": "$32 \\cdot 1024 / 64 = 32768 / 64 = 512$ lines."
+  },
+  {
+    "id": "ma-005",
+    "topic": "machine-architecture",
+    "difficulty": 3,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "A machine uses 32-bit byte addresses. A direct-mapped cache has 512 lines of 64 bytes each. How many bits are in the **tag**?",
+    "answer": ["17"],
+    "explanation": "Offset = $\\log_2 64 = 6$ bits and index = $\\log_2 512 = 9$ bits, so tag = $32 - 9 - 6 = 17$ bits."
+  },
+  {
+    "id": "ma-006",
+    "topic": "machine-architecture",
+    "difficulty": 3,
+    "type": "mcq",
+    "prompt": "In a classic 5-stage pipeline (IF, ID, EX, MEM, WB) **with forwarding**, a `lw` followed immediately by an instruction that uses the loaded register causes:",
+    "choices": ["A load-use data hazard that still needs a one-cycle stall", "A structural hazard", "A control hazard", "No hazard, because forwarding removes it completely"],
+    "answer": 0,
+    "explanation": "The loaded value is only ready at the end of MEM, but the next instruction needs it at the start of EX. Forwarding can't send data back in time, so one bubble is unavoidable."
+  },
+  {
+    "id": "ma-007",
+    "topic": "machine-architecture",
+    "difficulty": 2,
+    "type": "text",
+    "match": "numeric",
+    "tolerance": 0.01,
+    "prompt": "80% of a program parallelizes perfectly and the rest is serial. By Amdahl's law, what is the speedup on **4 cores**?",
+    "answer": ["2.5"],
+    "explanation": "$S = \\dfrac{1}{(1 - p) + p/n} = \\dfrac{1}{0.2 + 0.8/4} = \\dfrac{1}{0.4} = 2.5$."
+  },
+  {
+    "id": "ma-008",
+    "topic": "machine-architecture",
+    "difficulty": 2,
+    "type": "mcq",
+    "prompt": "A **little-endian** machine stores the 32-bit value `0x12345678` at address `0x100`. Which byte is at address `0x100`?",
+    "choices": ["`0x78`", "`0x12`", "`0x34`", "`0x56`"],
+    "answer": 0,
+    "explanation": "Little-endian puts the least significant byte at the lowest address, so the bytes are `78 56 34 12` starting at `0x100`."
+  },
+  {
+    "id": "ma-009",
+    "topic": "machine-architecture",
+    "difficulty": 2,
+    "type": "text",
+    "match": "numeric",
+    "tolerance": 0.001,
+    "prompt": "A 2 GHz processor runs a program of $10^9$ instructions with an average CPI of 1.5. What is the execution time **in seconds**?",
+    "answer": ["0.75"],
+    "explanation": "Time = instructions × CPI ÷ clock rate = $10^9 \\cdot 1.5 / (2 \\cdot 10^9) = 0.75$ s."
+  },
+  {
+    "id": "ma-010",
+    "topic": "machine-architecture",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "Which memory technology is typically used for on-chip CPU caches?",
+    "choices": ["SRAM", "DRAM", "NAND flash", "EEPROM"],
+    "answer": 0,
+    "explanation": "SRAM stores each bit in a flip-flop. It's fast and needs no refresh, but it's large and expensive per bit. DRAM is used for main memory."
+  },
+  {
+    "id": "ma-011",
+    "topic": "machine-architecture",
+    "difficulty": 1,
+    "type": "text",
+    "match": "regex",
+    "prompt": "Compute `0b1011 XOR 0b0110` and give the answer in binary.",
+    "answer": ["^(0b)?0*1101$"],
+    "display": "1101",
+    "explanation": "Compare bit by bit: `1011` ⊕ `0110` = `1101`. A result bit is 1 where the input bits differ."
+  },
+  {
+    "id": "ma-012",
+    "topic": "machine-architecture",
+    "difficulty": 2,
+    "type": "mcq",
+    "prompt": "How many bits are in the **exponent** field of an IEEE 754 single-precision (32-bit) float?",
+    "choices": ["8", "11", "23", "7"],
+    "answer": 0,
+    "explanation": "Single precision is 1 sign bit, 8 exponent bits (bias 127), and 23 fraction bits. Double precision uses 11 exponent bits."
+  }
+]

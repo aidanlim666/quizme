@@ -1,0 +1,123 @@
+[
+  {
+    "id": "dsa-001",
+    "topic": "data-structures-algorithms",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "What is the **worst-case** time complexity of quicksort?",
+    "choices": ["$O(n^2)$", "$O(n \\log n)$", "$O(n)$", "$O(\\log n)$"],
+    "answer": 0,
+    "explanation": "Consistently bad pivots (e.g. always the smallest element on already-sorted input) create partitions of size $n-1$ and $0$, giving $O(n^2)$. The average case is $O(n \\log n)$."
+  },
+  {
+    "id": "dsa-002",
+    "topic": "data-structures-algorithms",
+    "difficulty": 1,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "What is the maximum number of nodes in a binary tree of **height 3**? (A single node has height 0.)",
+    "answer": ["15"],
+    "explanation": "A perfect binary tree of height $h$ has $2^{h+1} - 1$ nodes: $2^4 - 1 = 15$."
+  },
+  {
+    "id": "dsa-003",
+    "topic": "data-structures-algorithms",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "Which data structure does **breadth-first search** use to decide which vertex to visit next?",
+    "choices": ["Queue", "Stack", "Priority queue", "Hash set"],
+    "answer": 0,
+    "explanation": "BFS visits vertices in FIFO order, level by level. A stack, or recursion, gives DFS. A priority queue gives Dijkstra or best-first search."
+  },
+  {
+    "id": "dsa-004",
+    "topic": "data-structures-algorithms",
+    "difficulty": 2,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "In the worst case, how many elements does binary search examine in a sorted array of **1,000,000** elements?",
+    "answer": ["20"],
+    "explanation": "Binary search examines at most $\\lfloor \\log_2 n \\rfloor + 1$ elements. $2^{19} < 10^6 < 2^{20}$, so it's $19 + 1 = 20$."
+  },
+  {
+    "id": "dsa-005",
+    "topic": "data-structures-algorithms",
+    "difficulty": 2,
+    "type": "mcq",
+    "prompt": "Solve the recurrence $T(n) = 2T(n/2) + n$.",
+    "choices": ["$\\Theta(n \\log n)$", "$\\Theta(n)$", "$\\Theta(n^2)$", "$\\Theta(\\log n)$"],
+    "answer": 0,
+    "explanation": "Master theorem: $a = 2, b = 2$, so $n^{\\log_b a} = n$. Since $f(n) = \\Theta(n)$ matches it, the result is $\\Theta(n \\log n)$. This is merge sort's recurrence."
+  },
+  {
+    "id": "dsa-006",
+    "topic": "data-structures-algorithms",
+    "difficulty": 2,
+    "type": "text",
+    "match": "regex",
+    "prompt": "Insert `5, 3, 8, 1, 4` (in that order) into an empty binary search tree. What is the **preorder** traversal? Separate values with spaces.",
+    "answer": ["^5[\\s,]*3[\\s,]*1[\\s,]*4[\\s,]*8$"],
+    "display": "5 3 1 4 8",
+    "explanation": "The tree is 5 → (3 → (1, 4), 8). Preorder visits root, left, right: 5, 3, 1, 4, 8."
+  },
+  {
+    "id": "dsa-007",
+    "topic": "data-structures-algorithms",
+    "difficulty": 1,
+    "type": "mcq",
+    "prompt": "A hash table uses chaining, a good hash function, and keeps its load factor bounded by a constant. What is the **average** cost of a lookup?",
+    "choices": ["$O(1)$", "$O(\\log n)$", "$O(n)$", "$O(n \\log n)$"],
+    "answer": 0,
+    "explanation": "The expected chain length is the load factor $\\alpha = n/m$, which is $O(1)$ when kept bounded by resizing. The worst case is still $O(n)$."
+  },
+  {
+    "id": "dsa-008",
+    "topic": "data-structures-algorithms",
+    "difficulty": 2,
+    "type": "mcq",
+    "prompt": "Dijkstra's algorithm can return **incorrect** shortest paths when the graph has:",
+    "choices": ["Negative edge weights", "Cycles", "More than one connected component", "Undirected edges"],
+    "answer": 0,
+    "explanation": "Dijkstra finalizes a vertex the moment it's popped from the queue, assuming no shorter path can appear later. A negative edge breaks that assumption. Use Bellman–Ford instead."
+  },
+  {
+    "id": "dsa-009",
+    "topic": "data-structures-algorithms",
+    "difficulty": 1,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "How many edges does a spanning tree of a connected graph with **10 vertices** have?",
+    "answer": ["9"],
+    "explanation": "Every tree on $V$ vertices has exactly $V - 1$ edges."
+  },
+  {
+    "id": "dsa-010",
+    "topic": "data-structures-algorithms",
+    "difficulty": 2,
+    "type": "mcq",
+    "prompt": "Which sorting algorithm is **stable** in its standard form?",
+    "choices": ["Merge sort", "Heapsort", "Quicksort (in-place)", "Selection sort"],
+    "answer": 0,
+    "explanation": "Merge sort keeps equal keys in their original order because it takes from the left half on ties. The swaps in heapsort, in-place quicksort and selection sort can reorder equal keys."
+  },
+  {
+    "id": "dsa-011",
+    "topic": "data-structures-algorithms",
+    "difficulty": 2,
+    "type": "text",
+    "match": "numeric",
+    "prompt": "In a **0-indexed** array-based binary heap, what is the index of the **parent** of the element at index 9?",
+    "answer": ["4"],
+    "explanation": "Parent$(i) = \\lfloor (i - 1)/2 \\rfloor = \\lfloor 8/2 \\rfloor = 4$. The children of $i$ are at $2i + 1$ and $2i + 2$."
+  },
+  {
+    "id": "dsa-012",
+    "topic": "data-structures-algorithms",
+    "difficulty": 2,
+    "type": "mcq",
+    "prompt": "A dynamic array doubles its capacity whenever it's full. What is the **amortized** cost of an append?",
+    "choices": ["$O(1)$", "$O(\\log n)$", "$O(n)$", "$O(\\sqrt n)$"],
+    "answer": 0,
+    "explanation": "Over $n$ appends the total copying is $1 + 2 + 4 + \\dots < 2n$, so the average per append is constant even though a single resize costs $O(n)$."
+  }
+]
