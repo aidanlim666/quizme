@@ -52,6 +52,7 @@ function resolveQuestion(bank, session, now) {
   const orderOk = q && (q.type !== 'mcq' || (Array.isArray(p.order) && p.order.length === q.choices.length));
   if (q && orderOk) {
     if (!p.solved) return { q, pending: { ...p, session: session ?? p.session } };
+    if (p.continued) return freshPending(bank, session); // already used to unlock Instagram
     const fresh = now - (p.solvedAt ?? 0) < CONFIG.solvedGraceMs;
     const sameVisit = fresh && (!session || p.session === session);
     if (sameVisit) return { q, pending: p };
@@ -226,6 +227,14 @@ function attach(q, pending) {
     btn.focus({ preventScroll: true });
   };
 
+  // Mark the question as used once the user heads to Instagram. When the page is hidden after
+  // this, the next question is swapped in (see advanceIfUsed), so returning to this tab never
+  // shows a solved question, even if Safari restores the tab without reloading it.
+  app.querySelector('#continue').addEventListener('click', () => {
+    pending.continued = true;
+    save();
+  });
+
   const onWrong = (flash = '') => {
     if (!pending.revealed) {
       pending.wrong += 1;
@@ -285,28 +294,49 @@ async function main() {
   }
   const session = new URLSearchParams(location.search).get('s');
   const { q, pending } = resolveQuestion(bankRef, session, Date.now());
-  storage.setPending(pending);
   renderFooter();
+  show(q, pending);
+}
+
+/** The question currently on screen (null until loaded). */
+let current = null;
+
+function show(q, pending) {
+  storage.setPending(pending);
   renderQuestion(bankRef, q, pending);
   attach(q, pending);
   sync(q, pending);
+  current = { q, pending };
+}
+
+function advance() {
+  const { q, pending } = freshPending(bankRef, null);
+  show(q, pending);
+  window.scrollTo(0, 0);
 }
 
 /**
- * Safari may bring this tab back (same URL, or from the back/forward cache) instead of loading it
- * fresh, which would leave an already-solved question on screen. If the solved question is old
- * enough that this must be a new visit, reload to get a new question. The delay leaves room to
- * switch apps briefly right after solving, e.g. to tap "Continue to Instagram".
+ * Safari often brings this tab back as it was (same URL, restored after a restart, or from the
+ * back/forward cache) instead of loading the page again. So the page moves on by itself:
+ * - when it's hidden after "Continue to Instagram" was tapped, the next question is swapped in;
+ * - when it's shown again with a solved question older than the grace period, likewise.
+ * The grace period lets you switch away briefly right after solving without losing the Continue button.
  */
-function reloadIfStale() {
-  const p = storage.getPending();
-  if (p?.solved && Date.now() - (p.solvedAt ?? 0) > CONFIG.solvedGraceMs) location.reload();
+function advanceIfUsed() {
+  const p = current?.pending;
+  if (!p?.solved) return;
+  const stale = Date.now() - (p.solvedAt ?? 0) > CONFIG.solvedGraceMs;
+  if (p.continued || stale) advance();
 }
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible') reloadIfStale();
+  if (document.visibilityState === 'hidden' && current?.pending.continued) advanceIfUsed();
+  if (document.visibilityState === 'visible') advanceIfUsed();
+});
+window.addEventListener('pagehide', () => {
+  if (current?.pending.continued) advanceIfUsed();
 });
 window.addEventListener('pageshow', (e) => {
-  if (e.persisted) reloadIfStale();
+  if (e.persisted) advanceIfUsed();
 });
 
 main();
