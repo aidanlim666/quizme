@@ -9,10 +9,11 @@ export const CONFIG = {
   recentLimit: 40,
 
   /**
-   * If the page is opened without a ?s= session id (e.g. by hand), a solved question
-   * stays solved across reloads for this long, then a new question is picked.
+   * How long a solved question stays on screen. Within this window a reload, or switching away
+   * and back, keeps it solved. After it, the next visit gets a new question. Gate only shows the
+   * quiz again 30 s after an unlock, so keep this below that.
    */
-  solvedGraceMs: 30_000,
+  solvedGraceMs: 20_000,
 
   /**
    * iCloud share links for the two shortcuts, shown on the setup page.

@@ -43,8 +43,8 @@ function freshPending(bank, session) {
 
 /**
  * Resume the stored question if it isn't solved yet, so refreshing the page can't skip a hard question.
- * A solved question is kept only for a reload within the same session (same ?s= id from the Gate
- * shortcut, or a short grace period without one). Any other visit gets a new question.
+ * A solved question is kept only briefly (CONFIG.solvedGraceMs) and only for the same session
+ * (same ?s= id from the Gate shortcut, or any visit when there is no id). Any other visit gets a new question.
  */
 function resolveQuestion(bank, session, now) {
   const p = storage.getPending();
@@ -52,7 +52,8 @@ function resolveQuestion(bank, session, now) {
   const orderOk = q && (q.type !== 'mcq' || (Array.isArray(p.order) && p.order.length === q.choices.length));
   if (q && orderOk) {
     if (!p.solved) return { q, pending: { ...p, session: session ?? p.session } };
-    const sameVisit = session ? p.session === session : now - (p.solvedAt ?? 0) < CONFIG.solvedGraceMs;
+    const fresh = now - (p.solvedAt ?? 0) < CONFIG.solvedGraceMs;
+    const sameVisit = fresh && (!session || p.session === session);
     if (sameVisit) return { q, pending: p };
   }
   return freshPending(bank, session);
@@ -290,5 +291,22 @@ async function main() {
   attach(q, pending);
   sync(q, pending);
 }
+
+/**
+ * Safari may bring this tab back (same URL, or from the back/forward cache) instead of loading it
+ * fresh, which would leave an already-solved question on screen. If the solved question is old
+ * enough that this must be a new visit, reload to get a new question. The delay leaves room to
+ * switch apps briefly right after solving, e.g. to tap "Continue to Instagram".
+ */
+function reloadIfStale() {
+  const p = storage.getPending();
+  if (p?.solved && Date.now() - (p.solvedAt ?? 0) > CONFIG.solvedGraceMs) location.reload();
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') reloadIfStale();
+});
+window.addEventListener('pageshow', (e) => {
+  if (e.persisted) reloadIfStale();
+});
 
 main();
